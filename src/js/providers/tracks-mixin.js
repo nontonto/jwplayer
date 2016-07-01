@@ -220,7 +220,12 @@ define(['../utils/underscore',
                 embedded: true
             };
             track = _createTrack.call(this, itemTrack);
-            _addTrackToList.call(this, track);
+            if (cueData.type === 'metadata') {
+                this._tracksById[track._id] = track;
+            } else {
+                _addTrackToList.call(this, track);
+            }
+            this.trigger('subtitlesTracks', {tracks: this._textTracks});
         }
         track.addCue(cueData.cue);
     }
